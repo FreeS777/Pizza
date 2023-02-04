@@ -8,7 +8,6 @@ import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 
 const Home = () => {
-  const { searchValue } = React.useContext(SearchContext);
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryID, setCategoryID] = React.useState(0);
@@ -17,6 +16,8 @@ const Home = () => {
     sortProperty: "rating",
   });
   const [currentPage, setCurrentPage] = React.useState(1);
+
+  const { searchValue } = React.useContext(SearchContext);
 
   React.useEffect(() => {
     setIsLoading(true);
