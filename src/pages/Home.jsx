@@ -8,6 +8,7 @@ import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "../redux/Slices/filterSlice";
+import axios from "axios";
 
 const Home = () => {
   const { searchValue } = React.useContext(SearchContext);
@@ -29,12 +30,12 @@ const Home = () => {
     const sortParam = sortType.replace("-", "");
     const orderParam = sortType.includes("-") ? "desc" : "asc";
     const search = searchValue ? `${searchValue}` : "";
-    fetch(
-      `https://62c01cdad40d6ec55ccb1588.mockapi.io/items?page=${currentPage}&limit=5&${categoryParam}&search=${search}&sortBy=${sortParam}&order=${orderParam}`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setPizzas(json);
+    axios
+      .get(
+        `https://62c01cdad40d6ec55ccb1588.mockapi.io/items?page=${currentPage}&limit=5&${categoryParam}&search=${search}&sortBy=${sortParam}&order=${orderParam}`
+      )
+      .then((res) => {
+        setPizzas(res.data);
         setIsLoading(false);
       })
       .catch((err) => {
