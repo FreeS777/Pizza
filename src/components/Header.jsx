@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logoSvg from "../assets/img/pizza-logo.svg";
 import Search from "./Search";
+
 const Header = () => {
   return (
     <div className="header">

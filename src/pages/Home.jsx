@@ -15,7 +15,6 @@ const Home = () => {
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentPage, setCurrentPage] = React.useState(1);
-
   const { categoryId, sort } = useSelector((state) => state.filter);
   const sortType = sort.sortProperty;
 
