@@ -1,14 +1,21 @@
 import React from "react";
+import qs from "qs";
 
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
+
 import { SearchContext } from "../App";
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/Slices/filterSlice";
+import {
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from "../redux/Slices/filterSlice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { searchValue } = React.useContext(SearchContext);
@@ -19,6 +26,7 @@ const Home = () => {
   );
   const sortType = sort.sortProperty;
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onClickCategory = (id) => {
@@ -30,11 +38,26 @@ const Home = () => {
   };
 
   React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortType);
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        })
+      );
+    }
+  }, []);
+
+  React.useEffect(() => {
     setIsLoading(true);
     const categoryParam = categoryId > 0 ? `category=${categoryId}` : "";
     const sortParam = sortType.replace("-", "");
     const orderParam = sortType.includes("-") ? "desc" : "asc";
     const search = searchValue ? `${searchValue}` : "";
+
     axios
       .get(
         `https://62c01cdad40d6ec55ccb1588.mockapi.io/items?page=${currentPage}&limit=5&${categoryParam}&search=${search}&sortBy=${sortParam}&order=${orderParam}`
@@ -48,6 +71,18 @@ const Home = () => {
         alert("error connecting to server");
       });
     window.scrollTo(0, 0);
+  }, [categoryId, sortType, searchValue, currentPage]);
+
+  React.useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        sortType,
+        categoryId,
+        currentPage,
+      },
+      { addQueryPrefix: true }
+    );
+    navigate(queryString);
   }, [categoryId, sortType, searchValue, currentPage]);
 
   return (
