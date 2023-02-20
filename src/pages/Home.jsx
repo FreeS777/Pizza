@@ -18,6 +18,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isMounted = React.useRef(false);
+
   const { searchValue } = React.useContext(SearchContext);
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -26,9 +30,6 @@ const Home = () => {
   );
   const sortType = sort.sortProperty;
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
   };
@@ -36,6 +37,22 @@ const Home = () => {
   const onChangePage = (num) => {
     dispatch(setCurrentPage(num));
   };
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify(
+        {
+          sortType,
+          categoryId,
+          currentPage,
+        },
+        { addQueryPrefix: true }
+      );
+      navigate(queryString);
+    }
+
+    isMounted.current = true;
+  }, [categoryId, sortType, searchValue, currentPage, navigate]);
 
   React.useEffect(() => {
     if (window.location.search) {
@@ -49,7 +66,7 @@ const Home = () => {
         })
       );
     }
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -71,18 +88,8 @@ const Home = () => {
         alert("error connecting to server");
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
-
-  React.useEffect(() => {
-    const queryString = qs.stringify(
-      {
-        sortType,
-        categoryId,
-        currentPage,
-      },
-      { addQueryPrefix: true }
-    );
-    navigate(queryString);
+    // }
+    // isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
 
   return (
