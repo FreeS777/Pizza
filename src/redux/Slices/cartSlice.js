@@ -46,7 +46,6 @@ const cartSlice = createSlice({
       }
     },
     removeItem(state, action) {
-      console.log(action);
       state.items = state.items.filter((item) => item.id !== action.payload.id);
       state.totalPrice -= action.payload.sum;
       state.totalCount -= action.payload.count;
