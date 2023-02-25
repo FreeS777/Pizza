@@ -7,14 +7,13 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination/";
 import ErrorBlock from "../components/ErrorBlock/";
-import { SearchContext } from "../App";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/Slices/filterSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchPizzas } from "../redux/Slices/pizzaSlice";
 
 const Home = () => {
@@ -22,9 +21,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const isMounted = React.useRef(false);
 
-  const { searchValue } = React.useContext(SearchContext);
   const { items, status } = useSelector((state) => state.pizza);
-  const { categoryId, sort, currentPage } = useSelector(
+  const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state) => state.filter
   );
   const sortType = sort.sortProperty;
@@ -89,6 +87,13 @@ const Home = () => {
     fetchData();
   }, [fetchData]);
 
+  const pizzas = items.map((obj) => (
+    <Link key={obj.id} to={obj.id}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
+  const skeleton = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
+
   return (
     <>
       <div className="content__top">
@@ -100,9 +105,7 @@ const Home = () => {
         <ErrorBlock />
       ) : (
         <div className="content__items">
-          {status !== "success"
-            ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-            : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+          {status !== "success" ? skeleton : pizzas}
         </div>
       )}
       <Pagination onChangePage={onChangePage} />
