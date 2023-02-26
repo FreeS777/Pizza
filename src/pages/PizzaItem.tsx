@@ -2,11 +2,17 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const PizzaItem = () => {
+const PizzaItem: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [pizza, setPizza] = React.useState();
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    size: number;
+    price: number;
+    rating: number;
+  }>();
 
   React.useEffect(() => {
     const getPizza = async () => {
@@ -14,6 +20,7 @@ const PizzaItem = () => {
         const { data } = await axios.get(
           "https://62c01cdad40d6ec55ccb1588.mockapi.io/items/" + id
         );
+
         setPizza(data);
       } catch (error) {
         alert("error getting pizza");
@@ -24,7 +31,7 @@ const PizzaItem = () => {
   }, [id, navigate]);
 
   if (!pizza) {
-    return "loading...";
+    return <>"loading..."</>;
   }
   return (
     <div className="container">

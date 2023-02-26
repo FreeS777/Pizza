@@ -11,7 +11,6 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
   const addedCount = cartItem ? cartItem.count : 0;
   const [activeSize, setActiveSize] = React.useState(0);
   const [activeType, setActiveType] = React.useState(0);
-  console.log(addedCount);
 
   const onClickAtiveSize = (index) => {
     setActiveSize(index);
