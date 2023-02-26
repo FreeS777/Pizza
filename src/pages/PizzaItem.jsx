@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PizzaItem = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [pizza, setPizza] = React.useState();
 
   React.useEffect(() => {
@@ -15,10 +17,11 @@ const PizzaItem = () => {
         setPizza(data);
       } catch (error) {
         alert("error getting pizza");
+        navigate("/");
       }
     };
     getPizza();
-  }, [id]);
+  }, [id, navigate]);
 
   if (!pizza) {
     return "loading...";
