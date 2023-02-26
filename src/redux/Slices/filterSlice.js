@@ -5,8 +5,8 @@ const initialState = {
   categoryId: 0,
   currentPage: 1,
   sort: {
-    name: "by popularity (DESC) ",
-    sortProperty: "rating",
+    name: "by popularity 🠟 ",
+    sortProperty: "-rating",
   },
 };
 

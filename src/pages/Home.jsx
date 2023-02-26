@@ -13,7 +13,7 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/Slices/filterSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchPizzas } from "../redux/Slices/pizzaSlice";
 
 const Home = () => {
@@ -87,11 +87,7 @@ const Home = () => {
     fetchData();
   }, [fetchData]);
 
-  const pizzas = items.map((obj) => (
-    <Link key={obj.id} to={obj.id}>
-      <PizzaBlock {...obj} />
-    </Link>
-  ));
+  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
   const skeleton = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
 
   return (
