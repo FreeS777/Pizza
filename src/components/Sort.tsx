@@ -27,8 +27,8 @@ const Sort: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      let path = e.composedPath().includes(sortRef.current);
+    const handleClickOutside = (e: MouseEvent) => {
+      let path = sortRef.current && e.composedPath().includes(sortRef.current);
       if (!path) setIsOpen(false);
     };
     document.body.addEventListener("click", handleClickOutside);
