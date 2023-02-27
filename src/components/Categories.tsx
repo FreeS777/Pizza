@@ -1,7 +1,13 @@
 import React from "react";
 
 const categories = ["All", "Meat", "Vegans", "Grill", "Spicy", "Closed"];
-const Categories = ({ value, onClickCategory }) => {
+
+type CategoriesProps = {
+  value: number;
+  onClickCategory: any;
+};
+
+const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
   return (
     <div className="categories">
       <ul>
@@ -9,7 +15,7 @@ const Categories = ({ value, onClickCategory }) => {
           <li
             key={id}
             onClick={() => onClickCategory(id)}
-            className={value === id ? `active` : null}
+            className={value === id ? `active` : ""}
           >
             {category}
           </li>

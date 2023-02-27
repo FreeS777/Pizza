@@ -3,20 +3,36 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addItem, selectCartItem } from "../../redux/Slices/cartSlice";
 
-const typeNames = ["thin", "traditional"];
+const typeNames: string[] = ["thin", "traditional"];
 
-const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItem(id));
   const addedCount = cartItem ? cartItem.count : 0;
   const [activeSize, setActiveSize] = React.useState(0);
   const [activeType, setActiveType] = React.useState(0);
 
-  const onClickAtiveSize = (index) => {
+  const onClickAtiveSize = (index: number) => {
     setActiveSize(index);
   };
 
-  const onClickAtiveType = (index) => {
+  const onClickAtiveType = (index: number) => {
     setActiveType(index);
   };
 
@@ -35,7 +51,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <Link to={id}>
+        <Link to={String(id)}>
           <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         </Link>
         <h4 className="pizza-block__title">{title}</h4>
@@ -45,7 +61,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
               <li
                 onClick={() => onClickAtiveType(typeId)}
                 key={typeId}
-                className={typeId === activeType ? "active" : null}
+                className={typeId === activeType ? "active" : ""}
               >
                 {typeNames[typeId]}
               </li>
@@ -56,7 +72,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
               <li
                 onClick={() => onClickAtiveSize(id)}
                 key={size}
-                className={id === activeSize ? "active" : null}
+                className={id === activeSize ? "active" : ""}
               >
                 {size}
               </li>

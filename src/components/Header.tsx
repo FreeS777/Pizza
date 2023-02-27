@@ -4,7 +4,7 @@ import Search from "./Search";
 import { useSelector } from "react-redux";
 import { selectCart } from "../redux/Slices/cartSlice";
 
-const Header = () => {
+const Header: React.FC = () => {
   const { totalPrice, totalCount } = useSelector(selectCart);
   const location = useLocation().pathname;
   return (
@@ -14,7 +14,7 @@ const Header = () => {
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
-              <h1>React Pizza</h1>
+              <h1>Super Pizza</h1>
               <p>the most delicious pizza in the universe</p>
             </div>
           </div>
