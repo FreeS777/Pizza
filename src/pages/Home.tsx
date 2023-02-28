@@ -7,7 +7,7 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination/";
 import ErrorBlock from "../components/ErrorBlock/";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectFilter,
   setCategoryId,
@@ -16,10 +16,11 @@ import {
 } from "../redux/Slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/Slices/pizzaSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Home = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMounted = React.useRef(false);
 
   const { items, status } = useSelector(selectPizzaData);
@@ -40,8 +41,9 @@ const Home = () => {
       const queryString = qs.stringify(
         {
           sortType,
-          categoryId,
+          categoryId: categoryId > 0 ? categoryId : null,
           currentPage,
+          searchValue,
         },
         { addQueryPrefix: true }
       );
@@ -54,30 +56,34 @@ const Home = () => {
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      const sort = sortList.find((obj) => obj.sortProperty === params.sortType);
-
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+      console.log(params, "!!!!!");
+      if (sort) {
+        params.sortBy = sort;
+      }
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue,
+          categoryId: Number(params.category),
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
         })
       );
     }
-  }, [dispatch]);
+  }, [dispatch, searchValue]);
 
   const fetchData = React.useCallback(async () => {
     const categoryParam = categoryId > 0 ? `category=${categoryId}` : "";
-    const sortParam = sortType.replace("-", "");
+    const sortBy = sortType.replace("-", "");
     const orderParam = sortType.includes("-") ? "desc" : "asc";
     const search = searchValue ? `${searchValue}` : "";
     dispatch(
-      //@ts-ignore
       fetchPizzas({
         categoryParam,
-        sortParam,
+        sortBy,
         orderParam,
         search,
-        currentPage,
+        currentPage: String(currentPage),
       })
     );
 
