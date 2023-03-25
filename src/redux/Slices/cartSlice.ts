@@ -18,15 +18,12 @@ interface CartSliceState {
   totalCount: number;
 }
 
-const cartData = getCartFromLS();
-const getItems = () => (cartData.items ? cartData.items : []);
-const getTotalCount = () => (cartData.totalCount ? cartData.totalCount : 0);
-const getTotalPrice = () => (cartData.totalPrice ? cartData.totalPrice : 0);
+const { totalPrice, items, totalCount } = getCartFromLS();
 
 const initialState: CartSliceState = {
-  totalPrice: getTotalPrice(),
-  totalCount: getTotalCount(),
-  items: getItems(),
+  totalPrice: totalPrice ? totalPrice : 0,
+  totalCount: totalCount ? totalCount : 0,
+  items,
 };
 
 const cartSlice = createSlice({
