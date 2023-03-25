@@ -48,10 +48,6 @@ body {
 
     @media (max-width: 994px) {
       flex-direction: column-reverse;
-
-      // .categories {
-      //   margin-top: 30px;
-      // }
     }
   }
 }
@@ -175,6 +171,23 @@ body {
         svg {
           path:first-of-type {
             display: none;
+          }
+        }
+        &:disabled {
+          opacity: 0.4;
+          border-color: #787878;
+          &:hover {
+            background-color: transparent;
+          }
+          &:active {
+            transform: none;
+            -webkit-transform: none;
+            -moz-transform: none;
+            -ms-transform: none;
+            -o-transform: none;
+          }
+          svg path {
+            fill: #787878;
           }
         }
       }

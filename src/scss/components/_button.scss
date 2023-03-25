@@ -61,7 +61,6 @@
     span {
       color: $orange;
     }
-
     svg {
       path {
         fill: $orange;
@@ -82,7 +81,6 @@
         }
       }
     }
-
     &:active {
       background-color: darken($orange, 8%);
     }

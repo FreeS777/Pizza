@@ -57,7 +57,6 @@ const Home = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
-      console.log(params, "!!!!!");
       if (sort) {
         params.sortBy = sort;
       }
