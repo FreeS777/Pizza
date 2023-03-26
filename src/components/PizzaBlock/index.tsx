@@ -1,11 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  addItem,
-  CartItem,
-  selectCartItem,
-} from "../../redux/Slices/cartSlice";
+import { selectCartItem } from "../../redux/Cart/selectors";
+import { addItem } from "../../redux/Cart/slice";
+import { CartItem } from "../../redux/Cart/types";
 
 const typeNames: string[] = ["thin", "traditional"];
 
@@ -19,7 +17,7 @@ type PizzaBlockProps = {
   rating: number;
 };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
   id,
   title,
   price,
@@ -112,4 +110,3 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
     </div>
   );
 };
-export default PizzaBlock;

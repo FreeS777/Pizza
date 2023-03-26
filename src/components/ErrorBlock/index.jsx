@@ -1,6 +1,6 @@
 import styles from "./ErrorBlock.module.scss";
 
-const ErrorBlock = () => {
+export const ErrorBlock = () => {
   return (
     <div className={styles.root}>
       <h1>
@@ -10,5 +10,3 @@ const ErrorBlock = () => {
     </div>
   );
 };
-
-export default ErrorBlock;

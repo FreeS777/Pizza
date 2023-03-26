@@ -7,7 +7,10 @@ type CategoriesProps = {
   onClickCategory: (id: number) => void;
 };
 
-const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
+export const Categories: React.FC<CategoriesProps> = ({
+  value,
+  onClickCategory,
+}) => {
   return (
     <div className="categories">
       <ul>
@@ -24,5 +27,3 @@ const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
     </div>
   );
 };
-
-export default Categories;
