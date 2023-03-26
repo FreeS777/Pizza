@@ -123,6 +123,11 @@ body {
     }
   }
 
+  &__item_wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
   &__item {
     display: flex;
     width: 100%;
@@ -241,6 +246,9 @@ body {
         }
       }
     }
+    @media (max-width: 930px) {
+      flex-direction: column;
+    }
   }
 
   &__bottom {
@@ -309,7 +317,7 @@ body {
 
   &--empty {
     margin: 0 auto;
-    width: 560px;
+    max-width: 560px;
     text-align: center;
 
     h2 {
