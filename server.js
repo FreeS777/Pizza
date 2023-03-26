@@ -1,18 +1,15 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(cors());
+// Добавить middleware для обслуживания статических файлов из папки 'build'
+app.use(express.static(path.join(__dirname, "build")));
 
-app.get("/", (req, res) => {
-  res.send("Hello from Express!");
+// Добавить обработчик для всех GET-запросов, которые не соответствуют другим маршрутам
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const port = process.env.PORT || process.env.VCAP_APP_PORT || 5000;
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Запустить сервер на порту 5000
+app.listen(5000);
