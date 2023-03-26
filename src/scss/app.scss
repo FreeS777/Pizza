@@ -341,6 +341,9 @@ body {
       display: block;
       width: 300px;
       margin: 45px auto 60px;
+      @media (max-width: 440px) {
+        width: 150px;
+      }
     }
 
     .button--black {
