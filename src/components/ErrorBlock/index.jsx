@@ -1,4 +1,5 @@
 import styles from "./ErrorBlock.module.scss";
+import React from "react";
 
 export const ErrorBlock = () => {
   return (
