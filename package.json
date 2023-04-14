@@ -42,9 +42,8 @@
       "localhost",
       ".localhost"
     ],
-    "proxy": "https://localhost:3386/"
+    "proxy": "https://localhost:3000/"
   },
-  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": [
       "react-app",
